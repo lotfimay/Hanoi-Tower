@@ -76,7 +76,7 @@ void resolveHanoiGame(tourPointer tour , int source , int destination,int disksT
         resolveHanoiGame(tour , getTheTemporaryPiquetNumber(source , destination) , destination ,disksToBeMoved - 1);
      }else{
         popPiquet(tour , source , destination);
-        printf("step %d  : Disk has been moved from %s to %s\n" ,step ,  getPiquetTitle(source) , getPiquetTitle(destination));
+        printf("step %d  : Disk has been moved from %s to %s\n" ,steps ,  getPiquetTitle(source) , getPiquetTitle(destination));
         steps++;
      }
 }
