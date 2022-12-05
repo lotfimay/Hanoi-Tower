@@ -7,7 +7,7 @@
 
 
 
-int step = 1;
+int steps = 1;
 
 
 int getDiskSize(Disk disk){
@@ -72,15 +72,12 @@ void resolveHanoiGame(tourPointer tour , int source , int destination,int disksT
 
      if(disksToBeMoved > 1){
         resolveHanoiGame(tour , source , getTheTemporaryPiquetNumber(source , destination) , disksToBeMoved - 1);
-        // resolveHanoiGame(tour , source , destination , 1);
-        popPiquet(tour , source , destination);
-        printf("step %d  : Disk has been moved from %s to %s\n" ,step ,  getPiquetTitle(source) , getPiquetTitle(destination));
-        step++;
+        resolveHanoiGame(tour , source , destination , 1);
         resolveHanoiGame(tour , getTheTemporaryPiquetNumber(source , destination) , destination ,disksToBeMoved - 1);
      }else{
         popPiquet(tour , source , destination);
         printf("step %d  : Disk has been moved from %s to %s\n" ,step ,  getPiquetTitle(source) , getPiquetTitle(destination));
-        step++;
+        steps++;
      }
 }
 
