@@ -18,7 +18,7 @@ int main(){
     printfCurrentState(*tour);
 
   
-    resolveHanoiGame(tour , 1 , 3 , n);
+    resolveHanoiGameIteratif(tour , 1 , 3 , n);
 
     printf("==================================================================\n");
 

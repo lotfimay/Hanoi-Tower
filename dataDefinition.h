@@ -11,10 +11,7 @@ typedef struct Disk{
 }Disk;
 
 
-typedef struct point{
-    int source;
-    int destination;
-}point;
+
 
 
 /*
@@ -32,11 +29,11 @@ typedef struct node{
     pointer next;
 }node;
 
-typedef struct stack* stackPointer;
-typedef struct stack{
-    point value;
-    stackPointer next;
-}stack;
+// typedef struct stack* stackPointer;
+// typedef struct stack{
+//     point value;
+//     stackPointer next;
+// }stack;
 
 
 
@@ -55,3 +52,11 @@ typedef struct HanoiTour{
 }HanoiTour;
 
 typedef struct HanoiTour* tourPointer;
+
+typedef struct point* pointPointer;
+typedef struct point {
+    int source;
+    int destination;
+    int disksNumber;
+    pointPointer next;
+}point;

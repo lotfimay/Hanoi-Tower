@@ -11,8 +11,36 @@ pointer createNode(Disk value){
 }
 
 
+pointPointer createPointNode(int source , int destination , int disksNumber){
+    pointPointer newNode = (pointPointer)malloc(sizeof(point));
+    newNode->source = source;
+    newNode->destination = destination;
+    newNode->disksNumber = disksNumber;
+    newNode->next = NULL;
+    return newNode;
+}
 
+void pushPoint(pointPointer* head ,int source , int destination , int disksNumber){
+    pointPointer newPoint = createPointNode(source , destination , disksNumber);
+    if(*head){
+        newPoint->next = *head;
+        *head = newPoint;
+    }else *head = newPoint;
+}
 
+pointPointer popPoint(pointPointer* head){
+    pointPointer my_point = (*head);
+    *head = (*head)->next;
+    return my_point;
+}
+
+pointPointer initStack(){
+    return (pointPointer)NULL;
+}
+
+int isEmptyStack(pointPointer head){
+    return head == NULL;
+}
 
 /* 
 push an element to the stack after checking if 
