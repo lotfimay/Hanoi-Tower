@@ -29,11 +29,6 @@ typedef struct node{
     pointer next;
 }node;
 
-// typedef struct stack* stackPointer;
-// typedef struct stack{
-//     point value;
-//     stackPointer next;
-// }stack;
 
 
 
@@ -53,10 +48,15 @@ typedef struct HanoiTour{
 
 typedef struct HanoiTour* tourPointer;
 
-typedef struct point* pointPointer;
-typedef struct point {
+
+typedef struct callParams{
     int source;
     int destination;
-    int disksNumber;
-    pointPointer next;
-}point;
+    int disksNumber;  
+}callParams;
+
+typedef struct call* callPointer;
+typedef struct call {
+    callParams params;
+    callPointer next;
+}call;

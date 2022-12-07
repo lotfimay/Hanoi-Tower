@@ -11,36 +11,11 @@ pointer createNode(Disk value){
 }
 
 
-pointPointer createPointNode(int source , int destination , int disksNumber){
-    pointPointer newNode = (pointPointer)malloc(sizeof(point));
-    newNode->source = source;
-    newNode->destination = destination;
-    newNode->disksNumber = disksNumber;
-    newNode->next = NULL;
-    return newNode;
-}
 
-void pushPoint(pointPointer* head ,int source , int destination , int disksNumber){
-    pointPointer newPoint = createPointNode(source , destination , disksNumber);
-    if(*head){
-        newPoint->next = *head;
-        *head = newPoint;
-    }else *head = newPoint;
-}
 
-pointPointer popPoint(pointPointer* head){
-    pointPointer my_point = (*head);
-    *head = (*head)->next;
-    return my_point;
-}
 
-pointPointer initStack(){
-    return (pointPointer)NULL;
-}
 
-int isEmptyStack(pointPointer head){
-    return head == NULL;
-}
+
 
 /* 
 push an element to the stack after checking if 
@@ -96,7 +71,17 @@ int listSize(pointer head){
     return size;
 }
 
-
+pointer* getPiquet(tourPointer tour , int piquetNumber){
+    pointer* piquet = NULL;
+    if(piquetNumber == 1){
+        piquet = &(tour->piquet1);
+    }else if (piquetNumber == 2){
+        piquet = &(tour->piquet2);
+    }else if(piquetNumber == 3){
+        piquet =  &(tour->piquet3);
+    }
+    return piquet;
+}
 
 int getTheTemporaryPiquetNumber(int piquet1 , int piquet2){
         if((piquet1 == 1 && piquet2 == 2) || (piquet1 == 2 && piquet2 == 1))
@@ -121,6 +106,55 @@ char* getPiquetTitle(int piquetNumber){
             break;
         default : return "ERROR";
     }
+}
+
+
+/*
+ code needed in iteratif version
+ (stack init , push and pop)
+*/
+
+callParams newParams(int source, int destination , int disksNumber){
+    callParams* params = (callParams*)malloc(sizeof(callParams));
+    params->source = source;
+    params->destination = destination;
+    params->disksNumber = disksNumber;
+    return *params;
+}
+
+
+callPointer createCallNode(callParams parameters){
+    callParams* params = (callParams*)malloc(sizeof(callParams));
+    params->source = parameters.source;
+    params->destination = parameters.destination;
+    params->disksNumber = parameters.disksNumber;
+    callPointer newNode = (callPointer)malloc(sizeof(call));
+    newNode->params = *params;
+    newNode->next = NULL;
+    return newNode;
+}
+
+void pushCall(callPointer* head ,callParams parameters){
+    callPointer newCall = createCallNode(parameters);
+    if(*head)
+        newCall->next = *head;
+    *head = newCall;
+}
+
+
+
+callPointer popCall(callPointer* head){
+    callPointer call = *head;
+    *head = (*head)->next;
+    return call;
+}
+
+callPointer initStack(){
+    return (callPointer)NULL;
+}
+
+int isEmptyStack(callPointer head){
+    return head == NULL;
 }
 
 

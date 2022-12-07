@@ -76,40 +76,45 @@ void resolveHanoiGame(tourPointer tour , int source , int destination,int disksT
         resolveHanoiGame(tour , getTheTemporaryPiquetNumber(source , destination) , destination ,disksToBeMoved - 1);
      }else{
         popPiquet(tour , source , destination);
-        printf("step %d  : Disk has been moved from %s to %s\n" ,steps ,  getPiquetTitle(source) , getPiquetTitle(destination));
+        printf("step %d  : move a Disk from %s to %s\n" ,steps ,  getPiquetTitle(source) , getPiquetTitle(destination));
         steps++;
      }
 }
 
 
 void resolveHanoiGameIteratif(tourPointer tour , int source , int destination , int disksToBeMoved){
-     pointPointer stack = initStack();
-     pushPoint(&stack , getTheTemporaryPiquetNumber(source , destination) , destination , disksToBeMoved - 1);
-     pushPoint(&stack , source , destination , 1);
-     pushPoint(&stack , source , getTheTemporaryPiquetNumber(source , destination) , disksToBeMoved - 1);
+
+     int localSteps = 1;
+     callPointer stack = initStack();
+
+     callParams params = newParams(getTheTemporaryPiquetNumber(source , destination) , destination , disksToBeMoved - 1);
+     pushCall(&stack , params);
+
+     params = newParams(source , destination , 1);
+     pushCall(&stack , params);
+
+     params = newParams(source,getTheTemporaryPiquetNumber(source , destination) , disksToBeMoved - 1 );
+     pushCall(&stack , params);
+
      while(!isEmptyStack(stack)){
-        pointPointer point = popPoint(&stack);
-        if(point->disksNumber > 1){
-           pushPoint(&stack , getTheTemporaryPiquetNumber(point->source , point->destination) , point->destination , point->disksNumber - 1);
-           pushPoint(&stack , point->source , point->destination , 1);
-           pushPoint(&stack , point->source , getTheTemporaryPiquetNumber(point->source , point->destination) , point->disksNumber - 1);
+        callPointer call = popCall(&stack);
+        if(call->params.disksNumber > 1){
+           
+           params = newParams(getTheTemporaryPiquetNumber(call->params.source , call->params.destination) , call->params.destination , call->params.disksNumber - 1);
+           pushCall(&stack , params);
+
+           params = newParams(call->params.source , call->params.destination , 1);
+           pushCall(&stack , params);
+
+           params = newParams(call->params.source , getTheTemporaryPiquetNumber(call->params.source , call->params.destination) , call->params.disksNumber - 1);
+           pushCall(&stack , params);
         }else{
-          popPiquet(tour , point->source , point->destination);
-          printf("step %d  : Disk has been moved from %s to %s\n" ,steps ,  getPiquetTitle(point->source) , getPiquetTitle(point->destination));
-          steps++;
+          popPiquet(tour , call->params.source , call->params.destination);
+          printf("step %d  : move a Disk from  %s to %s\n" ,localSteps ,  getPiquetTitle(call->params.source) , getPiquetTitle(call->params.destination));
+          localSteps++;
         }
      }
 }
 
-pointer* getPiquet(tourPointer tour , int piquetNumber){
-    pointer* piquet = NULL;
-    if(piquetNumber == 1){
-        piquet = &(tour->piquet1);
-    }else if (piquetNumber == 2){
-        piquet = &(tour->piquet2);
-    }else if(piquetNumber == 3){
-        piquet =  &(tour->piquet3);
-    }
-    return piquet;
-}
+
 
