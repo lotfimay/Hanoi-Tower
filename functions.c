@@ -7,7 +7,7 @@
 
 
 
-int steps = 1;
+// int steps = 1;
 
 
 int getDiskSize(Disk disk){
@@ -25,9 +25,9 @@ tourPointer initializeHanoiTour(){
 void fillHanoiTour(tourPointer tour,int disksNumber){
      int i;
      for(i = disksNumber ; i >= 1 ; i--){
-        Disk disk;
-        disk.size = i;
-        insertPiquet(tour , 1 ,disk);
+        Disk* disk = (Disk*)malloc(sizeof(Disk));
+        disk->size = i;
+        insertPiquet(tour , 1 ,*disk);
      }
 }
 
@@ -71,13 +71,14 @@ int getDiskNumber(tourPointer tour , int piquetNumber){
 void resolveHanoiGame(tourPointer tour , int source , int destination,int disksToBeMoved){
 
      if(disksToBeMoved > 1){
-        resolveHanoiGame(tour , source , getTheTemporaryPiquetNumber(source , destination) , disksToBeMoved - 1);
+        int tmpPiquet = getTheTemporaryPiquetNumber(source , destination);
+        resolveHanoiGame(tour , source , tmpPiquet , disksToBeMoved - 1);
         resolveHanoiGame(tour , source , destination , 1);
-        resolveHanoiGame(tour , getTheTemporaryPiquetNumber(source , destination) , destination ,disksToBeMoved - 1);
+        resolveHanoiGame(tour , tmpPiquet , destination ,disksToBeMoved - 1);
      }else{
         popPiquet(tour , source , destination);
-        printf("step %d  : move a Disk from %s to %s\n" ,steps ,  getPiquetTitle(source) , getPiquetTitle(destination));
-        steps++;
+      //   printf("step %d  : move a Disk from %s to %s\n" ,steps ,  getPiquetTitle(source) , getPiquetTitle(destination));
+      //   steps++;
      }
 }
 
@@ -110,7 +111,7 @@ void resolveHanoiGameIteratif(tourPointer tour , int source , int destination , 
            pushCall(&stack , params);
         }else{
           popPiquet(tour , call->params.source , call->params.destination);
-          printf("step %d  : move a Disk from  %s to %s\n" ,localSteps ,  getPiquetTitle(call->params.source) , getPiquetTitle(call->params.destination));
+         //  printf("step %d  : move a Disk from  %s to %s\n" ,localSteps ,  getPiquetTitle(call->params.source) , getPiquetTitle(call->params.destination));
           localSteps++;
         }
      }

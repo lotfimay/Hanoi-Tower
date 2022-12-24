@@ -38,9 +38,11 @@ void push(pointer* head,Disk value){
  remove an element from the stack and returning it's value
 */
 Disk pop(pointer* head){
-    Disk tmp = (*head)->value;
-    *head = (*head)->next;
-    return tmp;
+    pointer tmp = *head;
+    Disk disk = tmp->value;
+    *head = (tmp)->next;
+    free(tmp);
+    return disk;
 }
 
 /*
