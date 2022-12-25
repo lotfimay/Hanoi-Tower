@@ -29,10 +29,9 @@ void push(pointer* head,Disk value){
         }
     }
     pointer newNode = createNode(value);
-    if(*head != NULL){
+    if(*head != NULL)
          newNode->next = *head;
-         *head = newNode;
-    }else *head = newNode;
+    *head = newNode;
 }
 /*
  remove an element from the stack and returning it's value
@@ -126,29 +125,36 @@ callParams newParams(int source, int destination , int disksNumber){
 
 
 callPointer createCallNode(callParams parameters){
-    callParams* params = (callParams*)malloc(sizeof(callParams));
-    params->source = parameters.source;
-    params->destination = parameters.destination;
-    params->disksNumber = parameters.disksNumber;
     callPointer newNode = (callPointer)malloc(sizeof(call));
-    newNode->params = *params;
+    newNode->params = parameters;
     newNode->next = NULL;
     return newNode;
+}
+int callStackSize(callPointer head){
+    int result = 0;
+    while(head){
+        result++;
+        head = head->next;
+    }
+    return result;
 }
 
 void pushCall(callPointer* head ,callParams parameters){
     callPointer newCall = createCallNode(parameters);
     if(*head)
-        newCall->next = *head;
+       newCall->next = *head;
     *head = newCall;
+
 }
 
 
 
-callPointer popCall(callPointer* head){
-    callPointer call = *head;
-    *head = (*head)->next;
-    return call;
+callParams popCall(callPointer* head){
+     callPointer top = *head;
+     *head = top->next;
+     callParams result = top->params;
+     free(top);
+     return result;
 }
 
 callPointer initStack(){
